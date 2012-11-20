@@ -251,7 +251,7 @@ function DatAss.Spellbook.DumpSpellbook()
     end
     DatAss.Log("Dumping spellbook:")
 	DatAss.mainWeapon.typename = DatAss.GetStringOfWeaponType(DatAss.mainWeapon)
-	DatAss.secondaryWeapon.typename = DatAss.GetStringOfWeaponType(DatAss.mainWeapon)
+	DatAss.secondaryWeapon.typename = DatAss.GetStringOfWeaponType(DatAss.secondaryWeapon)
 	DatAss.Log("Current Secondary Weapon: " .. DatAss.secondaryWeapon.typename)
 	DatAss.Log("Current Primary Weapon: " .. DatAss.mainWeapon.typename)	
 end
