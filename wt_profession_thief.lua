@@ -89,14 +89,14 @@ function DatAss.Ability:TryCast(TID)
                     if (Player:IsProfessionPowerLargerThan(self.initiative)) then
                         if (not self.isArea) then                            
                             Player:CastSpell(self.slot,TID)
-                            return true;                                                            
+                            return true                                                          
                         end
                     end
                 end
             end
         end
     end
-    return false;
+    return false
 end
 
 function DatAss.Ability:TryCastSelf()
@@ -104,11 +104,11 @@ function DatAss.Ability:TryCastSelf()
         if (Player:IsProfessionPowerLargerThan(self.initiative)) then
             if (not self.isArea) then                
                 Player:CastSpell(self.slot,TID)
-                return true;
+                return true
             end
         end
     end
-    return false;
+    return false
 end
 
 --[[
@@ -124,13 +124,13 @@ DatAss.Spellbook.Counter = 0
 
 function DatAss.Spellbook.Initialize()
 	-- Slot 1
-    DatAss.Backstab = DatAss.Ability.Construct("Backstab", 13004, GW2.SKILLBARSLOT.Slot_1, 130, 0, false) -- Dagger mainhand
-    DatAss.SneakAttack = DatAss.Ability.Construct("Sneak Attack", 13084, GW2.SKILLBARSLOT.Slot_1, 900, 0, false) -- Pistol mainhand
+	DatAss.Backstab = DatAss.Ability.Construct("Backstab", 13004, GW2.SKILLBARSLOT.Slot_1, 130, 0, false) -- Dagger mainhand
+	DatAss.SneakAttack = DatAss.Ability.Construct("Sneak Attack", 13084, GW2.SKILLBARSLOT.Slot_1, 900, 0, false) -- Pistol mainhand
 	DatAss.TacticalStrike = DatAss.Ability.Construct("Tactical Strike", 13009, GW2.SKILLBARSLOT.Slot_1, 130, 0, false) -- Sword mainhand
-	
+
 	-- Slot 2
-    DatAss.Heartseeker = DatAss.Ability.Construct("Heartseeker", 13097, GW2.SKILLBARSLOT.Slot_2, 450, 3, false) -- Dagger mainhand
-   	
+	DatAss.Heartseeker = DatAss.Ability.Construct("Heartseeker", 13097, GW2.SKILLBARSLOT.Slot_2, 450, 3, false) -- Dagger mainhand
+
 	-- Slot 3
 	DatAss.DeathBlossom = DatAss.Ability.Construct("Death Blossom", 13006, GW2.SKILLBARSLOT.Slot_3, 240, 5, false) -- Dagger mainhand, dagger offhand
 	DatAss.PistolWhip = DatAss.Ability.Construct("Pistol Whip", 13031, GW2.SKILLBARSLOT.Slot_3, 130, 5, false) -- Sword mainhand, pistol offhand
@@ -139,30 +139,30 @@ function DatAss.Spellbook.Initialize()
 	DatAss.ShadowStrike = DatAss.Ability.Construct("Shadow Strike", 13010, GW2.SKILLBARSLOT.Slot_3, 130, 3, false) -- Pistol mainhand, dagger offhand
 	DatAss.Repeater = DatAss.Ability.Construct("Repeater", 13111, GW2.SKILLBARSLOT.Slot_3, 900, 5, false) -- Pistol mainhand, no offhand
 	DatAss.Stab = DatAss.Ability.Construct("Stab", 13112, GW2.SKILLBARSLOT.Slot_3, 130, 4, false) -- Sword mainhand, no offhand
-   
+
 	-- Slot 4
-    DatAss.DancingDagger = DatAss.Ability.Construct("Dancing Dagger", 13019, GW2.SKILLBARSLOT.Slot_4, 900, 4, false) -- Dagger mainhand
-	
+	DatAss.DancingDagger = DatAss.Ability.Construct("Dancing Dagger", 13019, GW2.SKILLBARSLOT.Slot_4, 900, 4, false) -- Dagger mainhand
+
 	-- Slot 5
 	DatAss.CloakAndDagger = DatAss.Ability.Construct("Cloak and Dagger", 13013, GW2.SKILLBARSLOT.Slot_5, 130, 6, false)    -- Dagger mainhand
 	DatAss.BlackPowder = DatAss.Ability.Construct("Black Powder", 13113, GW2.SKILLBARSLOT.Slot_5, 900, 6, false) -- Pistol mainhand
-	
+
 	-- Slot 6
-    DatAss.HideInShadows = DatAss.Ability.Construct("Hide in Shadows", 13027, GW2.SKILLBARSLOT.Slot_6, 8192, 0, false) -- Slot skill
-	
+	DatAss.HideInShadows = DatAss.Ability.Construct("Hide in Shadows", 13027, GW2.SKILLBARSLOT.Slot_6, 8192, 0, false) -- Slot skill
+
 	-- Slot 9
-    DatAss.Caltrops = DatAss.Ability.Construct("Caltrops", 13028, GW2.SKILLBARSLOT.Slot_9, 8192, 0, false) -- Slot skill
-	
+	DatAss.Caltrops = DatAss.Ability.Construct("Caltrops", 13028, GW2.SKILLBARSLOT.Slot_9, 8192, 0, false) -- Slot skill
+
 	-- Slot 10
-    DatAss.ThievesGuild = DatAss.Ability.Construct("Thieves Guild", 13082, GW2.SKILLBARSLOT.Slot_10, 8192, 0, false) -- Slot skill
-	
+	DatAss.ThievesGuild = DatAss.Ability.Construct("Thieves Guild", 13082, GW2.SKILLBARSLOT.Slot_10, 8192, 0, false) -- Slot skill
+
 	-- Slot 13
-    DatAss.Steal = DatAss.Ability.Construct("Steal", 13014, GW2.SKILLBARSLOT.Slot_13, 900, 0, false) -- Profession mechanic
-	
+	DatAss.Steal = DatAss.Ability.Construct("Steal", 13014, GW2.SKILLBARSLOT.Slot_13, 900, 0, false) -- Profession mechanic
+
 	-- Set Weapons
 	DatAss.mainWeapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon)
 	DatAss.secondaryWeapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon)
-	
+
 	-- Update Spellbook content
 	DatAss.Spellbook.Update()
 end
