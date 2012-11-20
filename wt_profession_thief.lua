@@ -29,8 +29,12 @@ DatAss.RestHealthLimit = 65
 DatAss.lastAttacked = 0
 DatAss.hasSteal = false
 DatAss.attackRange = 128
-DatAss.mainWeapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon)
-DatAss.secondaryWeapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon)
+DatAss.mainWeapon = {}
+DatAss.secondaryWeapon = {}
+DatAss.mainWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).dataID
+DatAss.secondaryWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).dataID
+DatAss.mainWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype
+DatAss.secondaryWeapon.weapontype = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).weapontype
 
 --[[
 ********************************************************************************?***************************************
@@ -53,6 +57,49 @@ function DatAss.GetNearbyEnemyCount()
         end
     end
     return i
+end
+
+function DatAss.GetStringOfWeaponType(weapon)
+	if (weapon.weapontype == 0) then
+		weapon.typename = "Sword"
+	elseif (weapon.weapontype == 1) then
+		weapon.typename = "Hammer"
+	elseif (weapon.weapontype == 2) then
+		weapon.typename = "Longbow"
+	elseif (weapon.weapontype == 3) then
+		weapon.typename = "Shortbow"
+	elseif (weapon.weapontype == 4) then
+		weapon.typename = "Axe"
+	elseif (weapon.weapontype == 5) then
+		weapon.typename = "Dagger"
+	elseif (weapon.weapontype == 6) then
+		weapon.typename = "Greatsword"
+	elseif (weapon.weapontype == 7) then
+		weapon.typename = "Mace"
+	elseif (weapon.weapontype == 8) then
+		weapon.typename = "Pistol"
+	elseif (weapon.weapontype == 9) then
+		weapon.typename = "Rifle"
+	elseif (weapon.weapontype == 10) then
+		weapon.typename = "Scepter"
+	elseif (weapon.weapontype == 11) then
+		weapon.typename = "Staff"
+	elseif (weapon.weapontype == 12) then
+		weapon.typename = "Focus"
+	elseif (weapon.weapontype == 13) then
+		weapon.typename = "Torch"
+	elseif (weapon.weapontype == 14) then
+		weapon.typename = "Warhorn"
+	elseif (weapon.weapontype == 15) then
+		weapon.typename = "Shield"
+	elseif (weapon.weapontype == 16) then
+		weapon.typename = "Spear"
+	elseif (weapon.weapontype == 17) then
+		weapon.typename = "Harpoongun"
+	elseif (weapon.weapontype == 18) then
+		weapon.typename = "Trident"
+	end
+	return weapon.typename
 end
 
 --[[
@@ -160,8 +207,12 @@ function DatAss.Spellbook.Initialize()
 	DatAss.Steal = DatAss.Ability.Construct("Steal", 13014, GW2.SKILLBARSLOT.Slot_13, 900, 0, false) -- Profession mechanic
 
 	-- Set Weapons
-	DatAss.mainWeapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon)
-	DatAss.secondaryWeapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon)
+	DatAss.mainWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).dataID
+	DatAss.secondaryWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).dataID
+	DatAss.mainWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).name
+	DatAss.secondaryWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).name
+	DatAss.mainWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype
+	DatAss.secondaryWeapon.weapontype = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).weapontype
 
 	-- Update Spellbook content
 	DatAss.Spellbook.Update()
@@ -199,8 +250,10 @@ function DatAss.Spellbook.DumpSpellbook()
         i = i - 1
     end
     DatAss.Log("Dumping spellbook:")
-	DatAss.Log("Current Primary Weapon: " .. DatAss.mainWeapon)
-	DatAss.Log("Current Secondaryy Weapon: " .. DatAss.secondaryWeapon)
+	DatAss.mainWeapon.typename = DatAss.GetStringOfWeaponType(DatAss.mainWeapon)
+	DatAss.secondaryWeapon.typename = DatAss.GetStringOfWeaponType(DatAss.mainWeapon)
+	DatAss.Log("Current Secondary Weapon: " .. DatAss.secondaryWeapon.typename)
+	DatAss.Log("Current Primary Weapon: " .. DatAss.mainWeapon.typename)	
 end
 
 function DatAss.Spellbook.Update()
@@ -225,7 +278,7 @@ function DatAss.Spellbook.Update()
 	end
 	 
 	-- Slot 3
-	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_3))		then
+	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_3)) then
 		if (DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Dagger and DatAss.secondaryWeapon.weapontype == GW2.WEAPONTYPE.Dagger) then
 			DatAss.Spellbook.AddToList(DatAss.DeathBlossom)
 		elseif (DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Sword and DatAss.secondaryWeapon.weapontype == GW2.WEAPONTYPE.Pistol) then
@@ -251,9 +304,11 @@ function DatAss.Spellbook.Update()
 	end
 	
 	-- Slot 5
-	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_5))		then
+	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_5)) then
 		if (DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Dagger and DatAss.secondaryWeapon.weapontype == GW2.WEAPONTYPE.Dagger) then
 			DatAss.Spellbook.AddToList(DatAss.CloakAndDagger)
+		elseif (DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Dagger and DatAss.secondaryWeapon.weapontype == GW2.WEAPONTYPE.Pistol) then
+			DatAss.Spellbook.AddToList(DatAss.BlackPowder)
 		elseif (DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Pistol and DatAss.secondaryWeapon.weapontype == GW2.WEAPONTYPE.Pistol) then
 			DatAss.Spellbook.AddToList(DatAss.BlackPowder)
 		end
@@ -265,17 +320,17 @@ function DatAss.Spellbook.Update()
 	end
 	
 	-- Slot 9
-	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_9) and Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_6).skillID == 13028) then
+	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_9) and Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_9).skillID == 13028) then
 		DatAss.Spellbook.AddToList(DatAss.Caltrops)
 	end
 	
 	-- Slot 10
-	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_10) and Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_6).skillID == 13082) then
+	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_10) and Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_10).skillID == 13082) then
 		DatAss.Spellbook.AddToList(DatAss.ThievesGuild)
 	end
 		
 	-- Slot 13
-	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_13) and Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_6).skillID == 13014) then
+	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_13) and Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_13).skillID == 13014) then
 		DatAss.Spellbook.AddToList(DatAss.Steal)
 	end
 	
@@ -292,15 +347,19 @@ DatAss.cUpdateWeapons = inheritsFrom(wt_cause)
 DatAss.eUpdateWeapons = inheritsFrom(wt_effect)
 
 function DatAss.cUpdateWeapons:evaluate()	
-	if (DatAss.mainWeapon ~= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon) or DatAss.secondaryWeapon ~= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon)) then		
+	if (DatAss.mainWeapon.weapontype ~= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype or DatAss.secondaryWeapon.weapontype ~= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).weapontype) then		
 		return true
 	end
 	return false
 end
 
 function DatAss.eUpdateWeapons:execute()	
-	DatAss.mainWeapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon)
-	DatAss.secondaryWeapon = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon)
+	DatAss.mainWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).dataID
+	DatAss.secondaryWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).dataID
+	DatAss.mainWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).name
+	DatAss.secondaryWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).name
+	DatAss.mainWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype
+	DatAss.secondaryWeapon.weapontype = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).weapontype
 	DatAss.Spellbook.Update()
 end
 
