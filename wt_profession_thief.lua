@@ -204,6 +204,8 @@ function DatAss.Spellbook.DumpSpellbook()
 end
 
 function DatAss.Spellbook.Update()
+	DatAss.Spellbook.Counter = 0
+	
 	-- Slot 1
 	if (Player:IsSpellUnlocked(GW2.SKILLBARSLOT.Slot_1)) then
 		if (DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Dagger) then
