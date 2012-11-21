@@ -373,14 +373,18 @@ DatAss.eUpdateWeapons = inheritsFrom(wt_effect)
 
 function DatAss.cUpdateWeapons:evaluate()	
 	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon) ~= nil) then
-		if (DatAss.mainWeapon.weapontype ~= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype) then
+		if (DatAss.mainWeapon == nil or DatAss.mainWeapon.weapontype ~= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype) then
 		return true
 		end
+	else
+		DatAss.mainWeapon = nil
 	end
 	if  (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon) ~= nil) then
-		if (DatAss.secondaryWeapon.weapontype ~= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).weapontype) then		
+		if (DatAss.secondaryWeapon == nil or DatAss.secondaryWeapon.weapontype ~= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).weapontype) then		
 		return true
 		end
+	else
+		DatAss.secondaryWeapon = nil
 	end
 	return false
 end
@@ -394,8 +398,9 @@ function DatAss.eUpdateWeapons:execute()
 	if (DatAss.secondaryWeapon ~= nil) then
 		DatAss.secondaryWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).dataID
 		DatAss.secondaryWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).name
-		DatAss.secondaryWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype
+		DatAss.secondaryWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype			
 	end
+	
 	DatAss.Spellbook.Update()
 end
 
