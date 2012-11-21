@@ -661,6 +661,7 @@ if (DatAss.professionID >= 0 and DatAss.professionID == Player.profession) then
 	-- Update Weapons
 	local combatUpdateWeapons = wt_kelement:create("UpdateWeapons", DatAss.cUpdateWeapons, DatAss.eUpdateWeapons, 55)
 	wt_core_state_combat:add(combatUpdateWeapons)
+	
     -- Heal
     local combatHeal = wt_kelement:create("Heal", DatAss.cHeal, DatAss.eHeal, 100)
     wt_core_state_combat:add(combatHeal)
