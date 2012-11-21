@@ -239,18 +239,7 @@ function DatAss.Spellbook.Initialize()
 	DatAss.Steal = DatAss.Ability.Construct("Steal", 13014, GW2.SKILLBARSLOT.Slot_13, 900, 0, false) -- Profession mechanic
 
 	-- Set Weapons
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon) ~= nil) then
-		DatAss.mainWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).dataID
-		DatAss.mainWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype	
-	else 
-		DatAss.mainWeapon = nil
-	end
-	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon) ~= nil) then
-		DatAss.secondaryWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).dataID
-		DatAss.secondaryWeapon.weapontype = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).weapontype
-	else 
-		DatAss.secondaryWeapon = nil
-	end
+	UpdateWeaponInfo()
 
 	-- Update Spellbook content
 	DatAss.Spellbook.Update()
