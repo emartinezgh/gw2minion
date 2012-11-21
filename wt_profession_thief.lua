@@ -114,6 +114,25 @@ function DatAss.GetStringOfWeaponType(weapon)
 	end	
 end
 
+function UpdateWeaponInfo()
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon) ~= nil) then
+		DatAss.mainWeapon = {}
+		DatAss.mainWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).dataID
+		DatAss.mainWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).name
+		DatAss.mainWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype
+	else
+		DatAss.secondaryWeapon = {}
+	end
+	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon) ~= nil) then
+		DatAss.secondaryWeapon = {}
+		DatAss.secondaryWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).dataID
+		DatAss.secondaryWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).name
+		DatAss.secondaryWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon).weapontype			
+	else
+		DatAss.secondaryWeapon = nil
+	end	
+end
+
 --[[
 ********************************************************************************?***************************************
                                                     Ability Class
@@ -270,10 +289,12 @@ function DatAss.Spellbook.DumpSpellbook()
     end
     DatAss.Log("Dumping spellbook:")	
 	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.OffHandWeapon) ~= nil) then
+		UpdateWeaponInfo()
 		DatAss.secondaryWeapon.typename = DatAss.GetStringOfWeaponType(DatAss.secondaryWeapon)
 		DatAss.Log("Current Secondary Weapon: " .. DatAss.secondaryWeapon.typename)
 	end
 	if (Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon) ~= nil) then
+		UpdateWeaponInfo()
 		DatAss.mainWeapon.typename = DatAss.GetStringOfWeaponType(DatAss.mainWeapon)
 		DatAss.Log("Current Primary Weapon: " .. DatAss.mainWeapon.typename)	
 	end
@@ -390,16 +411,7 @@ function DatAss.cUpdateWeapons:evaluate()
 end
 
 function DatAss.eUpdateWeapons:execute()	
-	if (DatAss.mainWeapon ~= nil) then
-		DatAss.mainWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).dataID
-		DatAss.mainWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).name
-		DatAss.mainWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype
-	end
-	if (DatAss.secondaryWeapon ~= nil) then
-		DatAss.secondaryWeapon.dataID = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).dataID
-		DatAss.secondaryWeapon.name = Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).name
-		DatAss.secondaryWeapon.weapontype= Inventory:GetEquippedItemBySlot(GW2.EQUIPMENTSLOT.MainHandWeapon).weapontype			
-	end
+	UpdateWeaponInfo()
 	
 	DatAss.Spellbook.Update()
 end
