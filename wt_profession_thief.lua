@@ -564,6 +564,22 @@ function DatAss.eAttack:execute()
 				elseif (DatAss.TacticalStrike:TryCast(TID)) then
 				else
 				end
+			elseif (Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1).skillID ~= 13022 and DatAss.mainWeapon ~= nil and DatAss.secondaryWeapon == nil and DatAss.mainWeapon.weapontype == GW2.WEAPONTYPE.Dagger) then 
+				if (DatAss.GetNearbyEnemyCount() > 1 and (DatAss.Caltrops:CanCast() or DatAss.ThievesGuild:CanCast())) then
+					if (not DatAss.Caltrops:TryCast(TID)) then
+						DatAss.ThievesGuild:TryCast(TID)
+					end
+				elseif (Player.health.percent <= 60 and DatAss.ThievesGuild:TryCast(TID)) then
+				elseif (not DatAss.hasSteal and DatAss.Steal:TryCast(TID)) then
+					DatAss.hasSteal = true
+				elseif (DatAss.hasSteal and DatAss.Steal:TryCast(TID)) then
+					DatAss.hasSteal = false
+				elseif (DatAss.Caltrops:TryCast(TID)) then				
+				elseif (T.health.percent > 40 and DatAss.TwistingFangs:TryCast(TID)) then
+				elseif (T.health.percent <= 40 and DatAss.Heartseeker:TryCast(TID)) then             
+				elseif (DatAss.Backstab:TryCast(TID)) then
+				else
+				end
 			else
 				local s1 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_1)
 				local s2 = Player:GetSpellInfo(GW2.SKILLBARSLOT.Slot_2)
