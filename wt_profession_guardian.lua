@@ -49,7 +49,6 @@ function wt_profession_guardian.c_MoveCloser:evaluate()
 	return false;
 end
 
-wt_profession_guardian.e_MoveCloser.throttle = 200
 function wt_profession_guardian.e_MoveCloser:execute()
 	wt_debug("e_MoveCloser ")
 	local T = CharacterList:Get(wt_core_state_combat.CurrentTarget)

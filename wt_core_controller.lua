@@ -117,7 +117,7 @@ end
 -- on/off switch
 function wt_core_controller.ToggleRun()
 	wt_core_controller.shouldRun = not wt_core_controller.shouldRun
-	Player:StopMoving()
+	wt_global_information.Reset()
 	d("Core Run State:",wt_core_controller.shouldRun)
 end
 

@@ -7,12 +7,14 @@ wt_global_information.PVP = false
 wt_global_information.MainWindow = { Name = "GW2Minion", x=100, y=100 , width=170, height=150 }
 wt_global_information.BtnStart = { Name="StartStop" ,Event = "GUI_REQUEST_RUN_TOGGLE" }
 wt_global_information.BtnPulse = { Name="Pulse" ,Event = "Debug.Pulse" }
-wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel = 2  
+wt_global_information.AttackEnemiesLevelMaxRangeAbovePlayerLevel = 3  
 wt_global_information.CurrentMarkerList = nil
 wt_global_information.SelectedMarker = nil
 wt_global_information.AttackRange = 1200
 wt_global_information.MaxLootDistance = 1200
 wt_global_information.lastrun = 0
+wt_global_information.InventoryFull = 0
+wt_global_information.CurrentVendor = 0
 gw2minion = { }
 
 if (Settings.GW2MINION.version == nil ) then
@@ -36,14 +38,6 @@ function wt_global_information.OnUpdate( event, tickcount )
 		--GUI_RefreshWindow(wt_global_information.MainWindow.Name)
 	end	
 	
-end
-
-function wt_global_information.ToggleRun()
-	if (wt_global_information.Currentprofession ~= nil and wt_global_information.Currentprofession == Player.profession) then
-		wt_global_information.Running = not wt_global_information.Running
-	else
-		wt_debug("Registered Playerprofession is not the current Playerprofession! Reload the lua files!")
-	end
 end
 
 -- Module Event Handler
@@ -70,6 +64,24 @@ function gw2minion.GUIVarUpdate(Event,NewVals, OldVals)
 			Settings.GW2MINION[tostring(k)] = v
 		end
 	end
+end
+
+function wt_global_information.Reset()
+	wt_core_controller.requestStateChange(wt_core_state_idle)
+	wt_global_information.CurrentMarkerList = nil
+	wt_global_information.SelectedMarker = nil
+	wt_global_information.AttackRange = 1200
+	wt_global_information.MaxLootDistance = 1200
+	wt_global_information.lastrun = 0
+	wt_global_information.InventoryFull = 0
+	wt_global_information.CurrentVendor = 0
+	wt_core_state_idle.selectedMarkerIndex = 0
+	wt_core_state_vendoring.junksold = false 
+	wt_core_state_combat.CurrentTarget = 0
+	c_check_aggro.TargetList = {}
+	wt_core_state_idle.selectedMarkerList = { }
+	c_check_aggro.TargetList = {}
+	-- ???
 end
 
 
