@@ -485,7 +485,7 @@ function wt_core_state_idle:initialize()
 	local ke_deposit = wt_kelement:create("DepositItems",c_deposit,e_deposit, 90)
 	wt_core_state_idle:add(ke_deposit)
 
-	local ke_vendorcheck = wsst_kelement:create("VendoringCheck",c_vendorcheck,e_vendorcheck, 88)
+	local ke_vendorcheck = wt_kelement:create("VendoringCheck",c_vendorcheck,e_vendorcheck, 88)
 	wt_core_state_idle:add(ke_vendorcheck)
 
 	local ke_revive = wt_kelement:create("Revive",c_check_revive,e_revive, 85)
